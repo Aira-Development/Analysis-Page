@@ -1,0 +1,146 @@
+/* usage-overview.css - Styles for App Usage Overview page */
+
+/* Base Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+h1 {
+  color: #4361ee;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(67, 97, 238, 0.2);
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #4361ee;
+  color: white;
+}
+
+th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+td {
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr {
+  transition: all 0.2s ease;
+}
+
+tbody tr:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+  transform: translateX(4px);
+}
+
+/* Rank Column Styling */
+td:first-child {
+  font-weight: bold;
+  color: #4361ee;
+  text-align: center;
+  width: 60px;
+}
+
+/* Message Count Highlight */
+td:nth-child(3) {
+  font-weight: 600;
+  color: #2b8a3e;
+}
+
+/* Last Active Column */
+td:nth-child(4) {
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+/* Link Styling */
+a {
+  color: #4361ee;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+a:hover {
+  color: #3a56d4;
+  text-decoration: underline;
+}
+
+/* Back Link */
+.back-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #4361ee;
+  color: white;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.back-link:hover {
+  background-color: #3a56d4;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Empty State */
+td[colspan] {
+  text-align: center;
+  color: #868e96;
+  padding: 2rem;
+  font-style: italic;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+  
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  
+  th, td {
+    padding: 0.75rem;
+  }
+  
+  .back-link {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -6,34 +6,88 @@ db = client['AIRA_NEW_DB']  # Replace with your actual DB name
 
 def get_feedback_summary():
     """
-    Return overall counts of likes and dislikes with some example comments aggregated
-    across all users.
+    Returns comprehensive feedback statistics including:
+    - Total likes/dislikes
+    - Average ratings
+    - Sample comments
+    - User engagement metrics
     """
-    all_feedback_docs = list(db["feedback"].find())
-    likes_count = 0
-    dislikes_count = 0
-    like_comments = []
-    dislike_comments = []
+    try:
+        # Initialize counters
+        stats = {
+            "likes_count": 0,
+            "dislikes_count": 0,
+            "total_ratings": 0,
+            "avg_rating": 0.0,
+            "rating_distribution": {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
+            "like_comments": [],
+            "dislike_comments": [],
+            "users_with_feedback": 0,
+            "feedback_timeline": {}
+        }
 
-    for doc in all_feedback_docs:
-        for fb in doc.get('feedback', []):
-            if fb.get('feedback_type') == 'like':
-                likes_count += 1
-                like_comments.extend([c['text'] for c in fb.get('comments', []) if c.get('text')])
-            elif fb.get('feedback_type') == 'dislike':
-                dislikes_count += 1
-                dislike_comments.extend([c['text'] for c in fb.get('comments', []) if c.get('text')])
+        # Use aggregation for better performance with large datasets
+        pipeline = [
+            {"$match": {"$or": [{"feedback": {"$exists": True}}, {"daily_feedbacks": {"$exists": True}}]}},
+            {"$project": {
+                "feedback": 1,
+                "daily_feedbacks": 1,
+                "month": {"$month": "$_id"}  # For timeline analysis
+            }}
+        ]
 
-    # Optionally limit comments displayed for summary (e.g., top 5 each)
-    like_comments = like_comments[:5]
-    dislike_comments = dislike_comments[:5]
+        for doc in db["feedback"].aggregate(pipeline):
+            # Process explicit feedback
+            for fb in doc.get('feedback', []):
+                if fb.get('feedback_type') == 'like':
+                    stats["likes_count"] += 1
+                    stats["like_comments"].extend(
+                        c['text'] for c in fb.get('comments', []) 
+                        if c.get('text') and len(stats["like_comments"]) < 10  # Limit to 10 comments
+                    )
+                elif fb.get('feedback_type') == 'dislike':
+                    stats["dislikes_count"] += 1
+                    stats["dislike_comments"].extend(
+                        c['text'] for c in fb.get('comments', []) 
+                        if c.get('text') and len(stats["dislike_comments"]) < 10
+                    )
 
-    return {
-        "likes_count": likes_count,
-        "dislikes_count": dislikes_count,
-        "like_comments": like_comments,
-        "dislike_comments": dislike_comments,
-    }
+            # Process daily ratings
+            for daily in doc.get('daily_feedbacks', []):
+                rating = daily.get('rating', 0)
+                if 1 <= rating <= 5:
+                    stats["total_ratings"] += 1
+                    stats["rating_distribution"][rating] += 1
+
+            # Track monthly feedback
+            month = doc.get('month')
+            if month:
+                stats["feedback_timeline"].setdefault(month, 0)
+                stats["feedback_timeline"][month] += 1
+
+        # Calculate derived metrics
+        stats["users_with_feedback"] = db["feedback"].count_documents({
+            "$or": [{"feedback": {"$exists": True, "$ne": []}}, 
+                   {"daily_feedbacks": {"$exists": True, "$ne": []}}]
+        })
+
+        if stats["total_ratings"] > 0:
+            total_score = sum(rating * count for rating, count in stats["rating_distribution"].items())
+            stats["avg_rating"] = round(total_score / stats["total_ratings"], 2)
+
+        # Add percentages
+        total_feedback = stats["likes_count"] + stats["dislikes_count"]
+        if total_feedback > 0:
+            stats["like_percentage"] = round((stats["likes_count"] / total_feedback) * 100, 1)
+            stats["dislike_percentage"] = round((stats["dislikes_count"] / total_feedback) * 100, 1)
+
+        return stats
+
+    except Exception as e:
+        return {
+            "error": "Failed to generate feedback summary",
+            "details": str(e)
+        }
 
 
 def get_user_feedback(user_id):

@@ -10,7 +10,7 @@
     />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/styles.css') }}"
+      href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
   <body class="bg-light">
@@ -18,27 +18,117 @@
       <h1 class="mb-4">🧠 AIRA Dashboard</h1>
 
       <div class="row g-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="card text-white bg-primary">
+            <div class="card-body">
+              <h5 class="card-title">Total Users</h5>
+              <p class="card-text fs-3">{{ summary.total_users }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card text-white bg-success">
+            <div class="card-body">
+              <h5 class="card-title">New Registrations Today</h5>
+              <p class="card-text fs-3">
+                {{ summary.new_registrations_today }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card text-white bg-danger">
+            <div class="card-body">
+              <h5 class="card-title">Dropout Count (7+ days)</h5>
+              <p class="card-text fs-3">{{ summary.dropout_count }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card text-white bg-warning">
             <div class="card-body">
               <h5 class="card-title">Active Users Today</h5>
               <p class="card-text fs-3">{{ summary.active_users_today }}</p>
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="row g-4 mt-4">
         <div class="col-md-4">
-          <div class="card text-white bg-success">
+          <div class="card text-white bg-info">
             <div class="card-body">
               <h5 class="card-title">Most Common Mood</h5>
               <p class="card-text fs-4">{{ summary.most_common_mood }}</p>
             </div>
           </div>
         </div>
+
         <div class="col-md-4">
-          <div class="card text-white bg-info">
+          <div class="card text-white bg-secondary">
             <div class="card-body">
               <h5 class="card-title">Average Mental Score</h5>
               <p class="card-text fs-4">{{ summary.avg_mental_score }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card bg-light border">
+            <div class="card-body">
+              <h5 class="card-title">Overall Usage</h5>
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <strong>Total Messages Sent:</strong>
+                  {{ summary.overall_usage.total_messages_sent }}
+                </li>
+                <li>
+                  <strong>Total Hours App Used:</strong>
+                  {{ summary.overall_usage.total_hours_app_used }}
+                  <strong> Hrs </strong>
+                </li>
+                <li>
+                  <strong>Avg Hours Per User:</strong>
+                  {{ summary.overall_usage.avg_hours_app_used }}
+                  <strong> Hrs </strong>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- New Feedback Stats Section -->
+      <div class="row g-4 mt-4">
+        <div class="col-md-6">
+          <div class="card bg-light border">
+            <div class="card-body">
+              <h5 class="card-title">Feedback Summary</h5>
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <strong>Total Likes:</strong> {{
+                  summary.feedback_stats.total_likes }}
+                </li>
+                <li>
+                  <strong>Total Dislikes:</strong> {{
+                  summary.feedback_stats.total_dislikes }}
+                </li>
+                <li>
+                  <strong>Total Feedback:</strong> {{
+                  summary.feedback_stats.total_feedback }}
+                </li>
+                <li>
+                  <strong>Average Likes per User:</strong> {{
+                  summary.feedback_stats.avg_likes_per_user | round(2) }}
+                </li>
+                <li>
+                  <strong>Average Dislikes per User:</strong> {{
+                  summary.feedback_stats.avg_dislikes_per_user | round(2) }}
+                </li>
+              </ul>
             </div>
           </div>
         </div>

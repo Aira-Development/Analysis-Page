@@ -12,10 +12,6 @@ app.register_blueprint(analysis_bp)
 app.register_blueprint(user_bp)
 app.register_blueprint(feedback_bp)
 
-# Home route redirecting to dashboard
-@app.route('/')
-def home():
-    return '<h2>Welcome to AIRA Analytics Dashboard</h2><p><a href="/dashboard">Go to Dashboard</a></p>'
 
 if __name__ == '__main__':
     app.run(debug=True)

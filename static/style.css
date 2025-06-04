@@ -1,163 +1,198 @@
-/* styles.css */
-
-/* Base Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* styles.css - Combined styles for AIRA Dashboard */
+:root {
+  /* Color Variables */
+  --primary-color: #4361ee;
+  --primary-dark: #3a56d4;
+  --success-color: #4cc9f0;
+  --success-dark: #3ab7d8;
+  --danger-color: #f72585;
+  --danger-dark: #e5177b;
+  --warning-color: #f8961e;
+  --warning-dark: #e6860e;
+  --info-color: #4895ef;
+  --info-dark: #3a7bd4;
+  --light-gray: #f8f9fa;
+  --dark-gray: #6c757d;
+  --white: #ffffff;
+  --black: #212529;
 }
 
-/* Body & Font */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f8fb;
-    color: #1e2a47; /* Dark blueish text */
-    line-height: 1.6;
-    padding: 20px 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--black);
+  background-color: var(--light-gray);
 }
 
-/* Headings */
-h1, h2, h3 {
-    color: #1b3a8a; /* Deep blue */
-    margin-bottom: 15px;
+.container {
+  max-width: 1400px;
 }
 
-h1 {
-    font-size: 2.5rem;
+/* Cards */
+.card {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
 }
 
-h2 {
-    font-size: 2rem;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
-h3 {
-    font-size: 1.5rem;
+.card-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
-/* Links */
-a {
-    color: #2c7be5; /* Bright blue */
-    text-decoration: none;
-    transition: color 0.3s ease;
+.card-text {
+  font-size: 1rem;
 }
 
-a:hover {
-    color: #1a5cd1; /* Darker blue on hover */
-}
+/* Specific Card Colors */
+.bg-primary { background-color: var(--primary-color) !important; }
+.bg-success { background-color: var(--success-color) !important; }
+.bg-danger { background-color: var(--danger-color) !important; }
+.bg-warning { background-color: var(--warning-color) !important; }
+.bg-info { background-color: var(--info-color) !important; }
+.bg-secondary { background-color: var(--dark-gray) !important; }
 
-/* Paragraphs & Text */
-p {
-    margin-bottom: 1rem;
-    color: #3a4a72;
-}
-
-/* Containers */
-.section {
-    margin-bottom: 30px;
-}
+/* Text Sizes */
+.fs-3 { font-size: 1.75rem !important; }
+.fs-4 { font-size: 1.5rem !important; }
 
 /* Buttons */
-button, .btn {
-    background-color: #2c7be5;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.btn {
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: all 0.2s;
 }
 
-button:hover, .btn:hover {
-    background-color: #1a5cd1;
+.btn-outline-primary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
-/* Tables */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-    box-shadow: 0 2px 5px rgb(44 123 229 / 0.15);
+.btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  color: white;
 }
 
-th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #d1d9ff;
+.btn-outline-secondary {
+  color: var(--dark-gray);
+  border-color: var(--dark-gray);
 }
 
-th {
-    background-color: #2c7be5;
-    color: white;
-    font-weight: 600;
+.btn-outline-secondary:hover {
+  background-color: var(--dark-gray);
+  color: white;
 }
 
-tr:hover {
-    background-color: #e5efff;
+.btn-outline-success {
+  color: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.btn-outline-success:hover {
+  background-color: var(--success-color);
+  color: white;
 }
 
 /* Lists */
-ul {
-    margin-left: 20px;
-    margin-bottom: 20px;
+.list-unstyled li {
+  padding: 4px 0;
 }
 
-li {
-    margin-bottom: 8px;
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-color);
 }
 
-/* Specific Classes */
-.journal-message {
-    margin-left: 20px;
-    margin-bottom: 10px;
-    padding-left: 10px;
-    border-left: 3px solid #2c7be5;
-    color: #344e86;
+h1 {
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+  margin-bottom: 30px;
 }
 
-.sentiment {
-    margin-left: 20px;
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #dce6fc;
-    border-radius: 5px;
-    color: #1b3a8a;
-}
-
-.feedback-section {
-    margin-bottom: 40px;
+/* Feedback Comments Section */
+.comment-list {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 .comment {
-    font-style: italic;
-    color: #3a4a72;
-    margin-left: 15px;
+  padding: 10px;
+  border-left: 3px solid var(--primary-color);
+  margin-bottom: 10px;
+  background-color: var(--light-gray);
+  border-radius: 0 4px 4px 0;
 }
 
-.timestamp {
-    font-size: 0.85rem;
-    color: #7a8dbd;
-    margin-top: 5px;
+/* User Grid Layout */
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
 }
 
-/* Horizontal Rules */
-hr {
-    border: 0;
-    border-top: 1px solid #a2b1d6;
-    margin: 15px 0;
+.user-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
-/* Responsive */
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.user-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.user-link:hover {
+  text-decoration: underline;
+}
+
+/* Empty States */
+.no-data {
+  color: var(--dark-gray);
+  font-style: italic;
+  padding: 10px 0;
+}
+
+/* Analysis Section */
+.analysis-section {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    body {
-        padding: 15px 20px;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-
-    h2 {
-        font-size: 1.5rem;
-    }
+  .card {
+    margin-bottom: 20px;
+  }
+  
+  .fs-3 {
+    font-size: 1.5rem !important;
+  }
+  
+  .fs-4 {
+    font-size: 1.25rem !important;
+  }
 }
+

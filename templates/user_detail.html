@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Detail - {{ user.username }}</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      h1,
+      h2 {
+        color: #333;
+      }
+      .section {
+        margin-bottom: 30px;
+      }
+      .journal-message {
+        margin-left: 20px;
+        margin-bottom: 10px;
+      }
+      .sentiment {
+        margin-left: 20px;
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>User Detail: {{ user.username }}</h1>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Current Streak:</strong> {{ user.streak }}</p>
+
+    <div class="section">
+
+    <div class="section">
+      <h2>Sentiments</h2>
+      {% if user.sentiments %} {% for sentiment in user.sentiments %}
+      <div class="sentiment">
+        <strong>Date:</strong> {{ sentiment.date }} <br />
+        <strong>Mental Score:</strong> {{ sentiment.mental_score | round(2) }}
+        <br />
+        <strong>Emotional State:</strong> {{ sentiment.emotional_state }} <br />
+        <p><em>Reflection:</em> {{ sentiment.reflection_text }}</p>
+      </div>
+      <hr />
+      {% endfor %} {% else %}
+      <p>No sentiment data available.</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

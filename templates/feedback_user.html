@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Feedback</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      h1,
+      h2 {
+        color: #333;
+      }
+      .feedback-section {
+        margin-bottom: 30px;
+      }
+      .comment {
+        margin-left: 20px;
+        font-style: italic;
+      }
+      .timestamp {
+        font-size: 0.85em;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>User Feedback</h1>
+
+    <div class="feedback-section">
+      <h2>Likes ({{ feedback.likes|length }})</h2>
+      {% if feedback.likes %} {% for like in feedback.likes %}
+      <div>
+        <p><strong>Response ID:</strong> {{ like.response_id }}</p>
+        {% if like.comments %}
+        <ul>
+          {% for comment in like.comments %}
+          <li class="comment">{{ comment }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p><em>No comments</em></p>
+        {% endif %}
+        <p class="timestamp">Timestamp: {{ like.timestamp }}</p>
+      </div>
+      <hr />
+      {% endfor %} {% else %}
+      <p>No likes found.</p>
+      {% endif %}
+    </div>
+
+    <div class="feedback-section">
+      <h2>Dislikes ({{ feedback.dislikes|length }})</h2>
+      {% if feedback.dislikes %} {% for dislike in feedback.dislikes %}
+      <div>
+        <p><strong>Response ID:</strong> {{ dislike.response_id }}</p>
+        {% if dislike.comments %}
+        <ul>
+          {% for comment in dislike.comments %}
+          <li class="comment">{{ comment }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p><em>No comments</em></p>
+        {% endif %}
+        <p class="timestamp">Timestamp: {{ dislike.timestamp }}</p>
+      </div>
+      <hr />
+      {% endfor %} {% else %}
+      <p>No dislikes found.</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Usage Overview | AIRA Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <h1>📊 App Usage Overview</h1>
+
+    <table border="1" cellpadding="10" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Username</th>
+          <th>Total Messages</th>
+          <th>Last Active</th>
+          <th>Profile</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.total_messages }}</td>
+          <td>{{ user.last_active }}</td>
+          <td>
+            <a href="{{ url_for('user.user_profile', user_id=user.user_id) }}"
+              >View</a
+            >
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5">No user activity data available.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <br />
+    <a href="{{ url_for('dashboard.dashboard') }}">⬅ Back to Dashboard</a>
+  </body>
+</html>
